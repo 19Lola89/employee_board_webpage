@@ -15,6 +15,7 @@ const render = require("./src/page-template.js");
 const questions = () => {
   inquirer
     .prompt([
+      //team manager questions
       {
         type: "input",
         name: "name",
@@ -28,7 +29,7 @@ const questions = () => {
       },
       {
         type: "input",
-        name: "Employee ID",
+        name: "employee ID",
         message: "What is your employee ID?",
         validate: (input) => {
           if (!input) {
@@ -39,7 +40,7 @@ const questions = () => {
       },
       {
         type: "input",
-        name: "Email",
+        name: "email",
         message: "What is your email address?",
         validate: (input) => {
           if (!input) {
@@ -54,13 +55,15 @@ const questions = () => {
         message: "What is your office number?",
         validate: (input) => {
           if (!input) {
-            return "Please fill in N/A if there is nothing to add to usage";
+            return "Please provide an office number";
           }
           return true;
         },
       },
+
+      // prompt for a choice of engineer/ intern/ finishing the team
       {
-        type: "input",
+        type: "list",
         name: "credits",
         message:
           "list your collaborators,if any, with links to their github profiles",
