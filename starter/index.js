@@ -10,116 +10,216 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
+const team = [];
 
-const questions = () => {
-  inquirer
-    .prompt([
-      //team manager questions
-      {
-        type: "input",
-        name: "name",
-        message: "What is your name? ",
-        validate: (input) => {
-          if (!input) {
-            return "Please enter correct name";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "employee ID",
-        message: "What is your employee ID?",
-        validate: (input) => {
-          if (!input) {
-            return "Please enter your employee ID";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What is your email address?",
-        validate: (input) => {
-          if (!input) {
-            return "Please enter your email address? ";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "office",
-        message: "What is your office number?",
-        validate: (input) => {
-          if (!input) {
-            return "Please provide an office number";
-          }
-          return true;
-        },
-      },
+const managerQuestions = [
+  //team manager questions
+  {
+    type: "input",
+    name: "name",
+    message: "What is your name? ",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter correct name";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "employeeID",
+    message: "What is your employee ID?",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter your employee ID";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is your email address?",
+    validate: function (input) {
+      // Regular expression to match email address format
+      const emailRegex = /\S+@\S+\.\S+/;
 
-      // prompt for a choice of engineer/ intern/ finishing the team
-      {
-        type: "list",
-        name: "credits",
-        message:
-          "list your collaborators,if any, with links to their github profiles",
-        validate: (input) => {
-          if (!input) {
-            return "Please fill in N/A if there is nothing to add to credits";
-          }
-          return true;
-        },
-      },
-      {
-        type: "list",
-        name: "license",
-        message: "Please choose your license",
-        choices: ["MIT License", "Apache license", "GPL license", "None"],
-        validate: (input) => {
-          if (!input) {
-            return "Please choose at least one option";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "features",
-        message: "please list the features of your project",
-      },
-      {
-        type: "input",
-        name: "test",
-        message: "What are the test instructions?",
-      },
-      {
-        type: "input",
-        name: "contribution",
-        message: "please add contributions, if any.",
-      },
-      {
-        type: "input",
-        name: "gitHub",
-        message: "Please add your github url",
-      },
-    ])
+      if (emailRegex.test(input)) {
+        return true;
+      } else {
+        return "Please enter a valid email address";
+      }
+    },
+  },
+  {
+    type: "input",
+    name: "office",
+    message: "What is your office number?",
+    validate: (input) => {
+      if (!input) {
+        return "Please provide an office number";
+      }
+      return true;
+    },
+  },
+];
 
-    // passing the answers from the input to generateMarkdown.js
-    .then((answers) => {
-      writeToFile("index.html", generateMarkdown(answers));
-    });
-};
+// engineer questions
 
-// dynamically writing README file
-function writeToFile(filename, data) {
-  fs.writeFile(filename, data, (err) =>
-    err ? console.log(err) : console.log("Success!")
-  );
+const engineerQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "What is your name? ",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter correct name";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "employeeID",
+    message: "What is your employee ID?",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter your employee ID";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is your email address?",
+    validate: function (input) {
+      // Regular expression to match email address format
+      const emailRegex = /\S+@\S+\.\S+/;
+
+      if (emailRegex.test(input)) {
+        return true;
+      } else {
+        return "Please enter a valid email address";
+      }
+    },
+  },
+  {
+    type: "input",
+    name: "github",
+    message: "Please add your github username",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter correct username";
+      }
+      return true;
+    },
+  },
+];
+
+// intern questions
+
+const internQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "What is your name? ",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter correct name";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "employeeID",
+    message: "What is your employee ID?",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter your employee ID";
+      }
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is your email address?",
+    validate: function (input) {
+      // Regular expression to match email address format
+      const emailRegex = /\S+@\S+\.\S+/;
+
+      if (emailRegex.test(input)) {
+        return true;
+      } else {
+        return "Please enter a valid email address";
+      }
+    },
+  },
+  {
+    type: "input",
+    name: "school",
+    message: "Please add your school name",
+    validate: (input) => {
+      if (!input) {
+        return "Please enter correct school";
+      }
+      return true;
+    },
+  },
+];
+
+// prompt for choosing which set of questions to answer
+
+inquirer.prompt([
+  {
+    type: "list",
+    name: "questionChoise",
+    message: "Please choose your position",
+    choices: ["manager", "engineer", "intern"],
+  },
+]);
+
+if (team.some((employee) => employee.getRole() === "Manager")) {
+  console.log("A manager has already been added to the team!");
+  return addEmployee();
 }
 
-// function call to initialize program
-questions();
+const addManager = async () => {
+  const answers = await inquirer.prompt(managerQuestions);
+  const manager = new Manager(
+    answers.name,
+    answers.id,
+    answers.email,
+    answers.officeNumber
+  );
+  team.push(manager);
+  addEmployee();
+};
+
+const addEngineer = async () => {
+  const answers = await inquirer.prompt(engineerQuestions);
+  const engineer = new Engineer(
+    answers.name,
+    answers.id,
+    answers.email,
+    answers.github
+  );
+  team.push(engineer);
+  addEmployee();
+};
+
+const addIntern = async () => {
+  const answers = await inquirer.prompt(internQuestions);
+  const intern = new Intern(
+    answers.name,
+    answers.id,
+    answers.email,
+    answers.school
+  );
+  team.push(intern);
+  addEmployee();
+};
+
+// add then and when
