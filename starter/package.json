@@ -1,8 +1,4 @@
 {
-  "dependencies": {
-    "inquirer": "^8.2.4",
-    "jest": "^24.9.0"
-  },
   "name": "starter",
   "version": "1.0.0",
   "main": "index.js",
