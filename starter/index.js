@@ -11,6 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
 
 const team = [];
+let managerQuestionsAsked = false;
 
 const managerQuestions = () => {
   return inquirer
@@ -231,7 +232,13 @@ const askQuestions = () => {
           break;
 
         case "manager":
-          managerQuestions();
+          if (!managerQuestionsAsked) {
+            managerQuestions();
+            managerQuestionsAsked = true;
+          } else {
+            console.log("Manager position has been added already");
+            askQuestions();
+          }
           break;
 
         default:
