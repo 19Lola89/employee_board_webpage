@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const outputPath = path.join(OUTPUT_DIR, "./team.html");
 
 const render = require("./src/page-template.js");
 
@@ -243,7 +243,7 @@ const askQuestions = () => {
           break;
 
         default:
-          buildTeam();
+          generateTeam();
       }
     });
 };
@@ -251,13 +251,11 @@ askQuestions();
 
 // team builder
 
-const buildTeam = () => {
+const generateTeam = () => {
   console.log("The team has been built");
+
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
+  }
+  fs.writeFileSync(outputPath, render(team), "utf-8");
 };
-
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR);
-}
-fs.writeFileSync(outputPath, render(team), "utf-8");
-
-//------------------------------------------------------------------

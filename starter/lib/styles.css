@@ -1,0 +1,13 @@
+.card {
+  margin: 10px;
+  background-color: darkred;
+  color: beige;
+}
+.jumbotron {
+  background-color: darkred;
+  border-radius: 10px;
+  color: beige;
+}
+.list-group-item {
+  background-color: darkslategrey;
+}
