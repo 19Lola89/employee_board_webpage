@@ -66,6 +66,7 @@ const managerQuestions = () => {
         },
       },
     ])
+
     .then((answers) => {
       const manager = new Manager(
         answers.name,
@@ -122,7 +123,7 @@ const engineerQuestions = () => {
       },
       {
         type: "input",
-        name: "github",
+        name: "gitHub",
         message: "Please add your github username",
         validate: (input) => {
           if (!input) {
@@ -218,20 +219,20 @@ const askQuestions = () => {
         type: "list",
         name: "questionSet",
         message: "Please choose your position",
-        choices: ["manager", "intern", "engineer", "done"],
+        choices: ["Manager", "Intern", "Engineer", "Done"],
       },
     ])
     .then((userChoice) => {
       switch (userChoice.questionSet) {
-        case "engineer":
+        case "Engineer":
           engineerQuestions();
           break;
 
-        case "intern":
+        case "Intern":
           internQuestions();
           break;
 
-        case "manager":
+        case "Manager":
           if (!managerQuestionsAsked) {
             managerQuestions();
             managerQuestionsAsked = true;
@@ -249,6 +250,7 @@ const askQuestions = () => {
 askQuestions();
 
 // team builder
+
 const buildTeam = () => {
   console.log("The team has been built");
 };
@@ -257,40 +259,5 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR);
 }
 fs.writeFileSync(outputPath, render(team), "utf-8");
+
 //------------------------------------------------------------------
-
-// const addManager = async () => {
-//   const answers = await inquirer.prompt(managerQuestions);
-//   const manager = new Manager(
-//     answers.name,
-//     answers.id,
-//     answers.email,
-//     answers.officeNumber
-//   );
-//   team.push(manager);
-//   addEmployee();
-// };
-
-// const addEngineer = async () => {
-//   const answers = await inquirer.prompt(engineerQuestions);
-//   const engineer = new Engineer(
-//     answers.name,
-//     answers.id,
-//     answers.email,
-//     answers.github
-//   );
-//   team.push(engineer);
-//   addEmployee();
-// };
-
-// const addIntern = async () => {
-//   const answers = await inquirer.prompt(internQuestions);
-//   const intern = new Intern(
-//     answers.name,
-//     answers.id,
-//     answers.email,
-//     answers.school
-//   );
-//   team.push(intern);
-//   addEmployee();
-// };
